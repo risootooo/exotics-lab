@@ -1,0 +1,309 @@
+{
+  "calibration": {
+    "as_of": "2026-11-03",
+    "dividend_yield": 0.013,
+    "dividend_yield_source": "Assumption: 1.3% continuous - NIFTY's trailing dividend yield has sat in a 1.1-1.4% band; index futures imply a similar carry. Sensitivity to q is second-order for every case here and is not hidden: q appears in every pricer signature.",
+    "historical_vol_yfinance_NSEI": {
+      "source": "yfinance ^NSEI daily closes, 4 Nov 2024 - 3 Nov 2026 (last row of the feed, 2026-11-04, is NaN and excluded); log-return stdev annualised x sqrt(252)",
+      "windows": {
+        "126d_pct": 12.19,
+        "21d_pct": 15.79,
+        "252d_pct": 13.86,
+        "63d_pct": 11.84,
+        "ewma_0.94_pct": 14.97
+      }
+    },
+    "iv_term_structure_from_same_file": [
+      {
+        "atm_iv_pct": 15.34,
+        "days": 6,
+        "expiry": "2026-11-09"
+      },
+      {
+        "atm_iv_pct": 13.14,
+        "days": 56,
+        "expiry": "2026-12-29"
+      },
+      {
+        "atm_iv_pct": 13.01,
+        "days": 83,
+        "expiry": "2027-01-25"
+      },
+      {
+        "atm_iv_pct": 13.28,
+        "days": 420,
+        "expiry": "2027-12-28"
+      },
+      {
+        "atm_iv_pct": 13.78,
+        "days": 784,
+        "expiry": "2028-12-26"
+      },
+      {
+        "atm_iv_pct": 18.2,
+        "days": 1147,
+        "expiry": "2029-12-24",
+        "note": "far LEAPS prints are illiquid settlement prices - indicative only"
+      }
+    ],
+    "modelling_vol_choice": "One flat vol, sigma = 15.34% (the real ATM print), is used for ALL cases so that MC, PDE and closed forms are compared on identical inputs. The 3-year autocall is additionally stressed at sigma + 5 pts (Case B), which spans the full term-structure / historical range above.",
+    "rate": 0.065,
+    "rate_source": "Assumption: 6.5% continuously compounded, the house convention of the sibling greeks-lab / var-risk-engine repos (NSE chain tools use DEFAULT_RATE = 6.5%); close to the Indian 10y G-Sec yield in early Nov 2026.",
+    "sigma": 0.1534,
+    "sigma_source": "ATM implied vol of the 3 Nov 2026 NIFTY chain, nearest expiry 9 Nov 2026 (6 days), ATM strike 23,800: CE IV 10.76% / PE IV 19.92%, averaged = 15.34%. The CE/PE gap is a settlement-print parity break measured by the sibling greeks-lab repo (parity-implied forward 23,690 vs spot 23,811); the average is the unbiased single-number summary and matches the realised-vol cross-checks below.",
+    "spot": 23810.85,
+    "spot_source": "UndrlygPric on NIFTY index-option (FinInstrmTp='IDO') rows of the NSE F&O bhavcopy for 3 Nov 2026, file BhavCopy_NSE_FO_0_0_0_20261103_F_0000.csv in the 220-file archive (fo_YYYYMMDD.zip, Mar-Nov 2026)",
+    "underlying": "NIFTY (NSE index)"
+  },
+  "case_a": {
+    "T": 0.25,
+    "strike": 23800.0,
+    "vanilla_bs": 890.8626573212696,
+    "vanilla_mc": 893.1874020938552,
+    "vanilla_mc_se": 1.321860255858494,
+    "barrier_rows": [
+      {
+        "barrier_mult": 1.02,
+        "barrier": 24287.067,
+        "mc_price": 1.0780030782133188,
+        "mc_se": 0.02211450278012754,
+        "pde_price": 1.101412310389442,
+        "discount_pct": 99.87899334770022
+      },
+      {
+        "barrier_mult": 1.05,
+        "barrier": 25001.392499999998,
+        "mc_price": 32.655390390331924,
+        "mc_se": 0.18894972345949396,
+        "pde_price": 32.62777383606066,
+        "discount_pct": 96.33440798960827
+      },
+      {
+        "barrier_mult": 1.08,
+        "barrier": 25715.718,
+        "mc_price": 146.09031790071145,
+        "mc_se": 0.43657507763534054,
+        "pde_price": 146.07348019456703,
+        "discount_pct": 83.6012524826229
+      },
+      {
+        "barrier_mult": 1.1,
+        "barrier": 26191.935,
+        "mc_price": 265.20745299096467,
+        "mc_se": 0.6064427026346061,
+        "pde_price": 263.7740368046336,
+        "discount_pct": 70.23026492227034
+      },
+      {
+        "barrier_mult": 1.15,
+        "barrier": 27382.477499999997,
+        "mc_price": 574.7790364657283,
+        "mc_se": 0.940745713638676,
+        "pde_price": 577.8402268549731,
+        "discount_pct": 35.48062299591405
+      },
+      {
+        "barrier_mult": 1.2,
+        "barrier": 28573.019999999997,
+        "mc_price": 776.7990204649653,
+        "mc_se": 0.9197829836449083,
+        "pde_price": 777.8511214303835,
+        "discount_pct": 12.803728601587316
+      },
+      {
+        "barrier_mult": 1.3,
+        "barrier": 30954.105,
+        "mc_price": 884.0894738405254,
+        "mc_se": 0.33423491176264536,
+        "pde_price": 883.9616145229543,
+        "discount_pct": 0.7602949147189952
+      }
+    ],
+    "headline_barrier_mult": 1.1,
+    "headline_barrier": 26191.935,
+    "delta_ladder": [
+      {
+        "spot_over_barrier": 0.8,
+        "spot": 20953.548000000003,
+        "uao_price": 38.00037926711642,
+        "uao_delta": 0.048581668372488854,
+        "uao_gamma": 4.5193960481490483e-05,
+        "vanilla_delta": 0.07289080068602131
+      },
+      {
+        "spot_over_barrier": 0.85,
+        "spot": 22263.14475,
+        "uao_price": 140.3319254753807,
+        "uao_delta": 0.10172959013892877,
+        "uao_gamma": 1.6606075162798057e-05,
+        "vanilla_delta": 0.25301108132068856
+      },
+      {
+        "spot_over_barrier": 0.9,
+        "spot": 23572.7415,
+        "uao_price": 255.59594404815516,
+        "uao_delta": 0.047270091171553896,
+        "uao_gamma": -0.00010259559194242291,
+        "vanilla_delta": 0.5312452868981578
+      },
+      {
+        "spot_over_barrier": 0.95,
+        "spot": 24882.33825,
+        "uao_price": 212.05900543520886,
+        "uao_delta": -0.1161359782380111,
+        "uao_gamma": -0.00011245878080057818,
+        "vanilla_delta": 0.7820087711481302
+      },
+      {
+        "spot_over_barrier": 0.98,
+        "spot": 25668.0963,
+        "uao_price": 93.33162399179031,
+        "uao_delta": -0.17532711051881927,
+        "uao_gamma": -3.173554036914637e-05,
+        "vanilla_delta": 0.880702448778915
+      },
+      {
+        "spot_over_barrier": 0.99,
+        "spot": 25930.01565,
+        "uao_price": 46.67826287573892,
+        "uao_delta": -0.17950149473577492,
+        "uao_gamma": -2.2219134889538122e-07,
+        "vanilla_delta": 0.904533820017358
+      },
+      {
+        "spot_over_barrier": 0.995,
+        "spot": 26060.975325,
+        "uao_price": 23.210567820217527,
+        "uao_delta": -0.17852497472100326,
+        "uao_gamma": 1.507455029162459e-05,
+        "vanilla_delta": 0.9149191648119526
+      }
+    ],
+    "greeks_at_spot_mc": {
+      "price": 264.6442116186633,
+      "delta": 0.0151828208071825,
+      "gamma": -0.00011924681702927735,
+      "vega_per_point": -28.6413374728712
+    },
+    "greeks_vanilla_mc": {
+      "price": 892.6971858324955,
+      "delta": 0.5828007132733917,
+      "gamma": 0.00021155206640750755,
+      "vega_per_point": 46.40442384437375
+    },
+    "vanilla_delta_bs": 0.5827451983821306,
+    "vanilla_vega_per_point": 46.27208969917123
+  },
+  "case_b": {
+    "terms": {
+      "maturity_years": 3.0,
+      "n_obs": 12,
+      "autocall_level": 1.0,
+      "coupon_barrier": 0.7,
+      "ki_barrier": 0.6,
+      "memory": false
+    },
+    "fair_coupon_pct": 7.113946825265885,
+    "leg_redemption_net_pct": 94.96768514382491,
+    "leg_coupon_annuity": 70.73871897032411,
+    "at_fair": {
+      "price": 99.99999999624804,
+      "se": 0.005000898877453622,
+      "p_autocall_by_date": [
+        0.552136,
+        0.6862,
+        0.75294,
+        0.793678,
+        0.821978,
+        0.843014,
+        0.859538,
+        0.872886,
+        0.883812,
+        0.893234,
+        0.901198,
+        0.908092
+      ],
+      "p_autocall_year1": 0.793678,
+      "p_ever_autocalled": 0.908092,
+      "p_capital_loss": 0.005708,
+      "expected_life": 0.7848465,
+      "mean_redemption_pv": 94.9676851438249,
+      "mean_coupon_pv": 5.03231485242313,
+      "mean_loss_given_loss_pct": 45.2027599211529
+    },
+    "marketed_coupon_pct": 6.113946825265884,
+    "value_at_marketed": 99.29261280654481,
+    "value_at_marketed_se": 0.005046189202222285,
+    "issuer_margin_pct": 0.7073871934551903,
+    "stress_vol_plus5": 98.09620251405615,
+    "stress_spot_minus10": 97.8147281107817,
+    "greeks_at_marketed": {
+      "price": 99.29261280654481,
+      "delta_per_1pct_spot": 0.09558183014138422,
+      "vega_per_point": -0.1598789786613679
+    }
+  },
+  "case_c": {
+    "T": 0.25,
+    "barrier": 27382.477499999997,
+    "barrier_mult": 1.15,
+    "rows": [
+      {
+        "strike": 22600.0,
+        "strike_mult": 0.95,
+        "mc_price": 1276.134281090805,
+        "mc_se": 1.0078860141014279,
+        "pde_price": 1276.6159197444185,
+        "diff_points": 0.4816386536135724,
+        "diff_vol_points": 0.01509472269268673
+      },
+      {
+        "strike": 23800.0,
+        "strike_mult": 1.0,
+        "mc_price": 576.6152056237332,
+        "mc_se": 0.9414890234845936,
+        "pde_price": 577.8402268549731,
+        "diff_points": 1.2250212312399071,
+        "diff_vol_points": 0.026474301013940337
+      },
+      {
+        "strike": 25000.0,
+        "strike_mult": 1.05,
+        "mc_price": 175.2648998494907,
+        "mc_se": 0.5673314762090156,
+        "pde_price": 174.60059152740828,
+        "diff_points": 0.6643083220824053,
+        "diff_vol_points": 0.015375184086845942
+      },
+      {
+        "strike": 26200.0,
+        "strike_mult": 1.1,
+        "mc_price": 21.33740556978298,
+        "mc_se": 0.16115952625170726,
+        "pde_price": 21.377109735005433,
+        "diff_points": 0.039704165222453014,
+        "diff_vol_points": 0.0014385373078171842
+      }
+    ],
+    "max_diff_points": 1.2250212312399071,
+    "max_diff_vol_points": 0.026474301013940337,
+    "asian": {
+      "geometric_closed_form": 501.6115281845582,
+      "geometric_mc": 501.4610780038919,
+      "geometric_mc_se": 0.7357106077637569,
+      "geometric_err_se": 0.20449641350643205,
+      "arithmetic_mc": 508.6285244919807,
+      "arithmetic_mc_se": 0.011718357193365976
+    }
+  },
+  "extras": {
+    "lookback_floating_call_3m": {
+      "price": 1481.5651687880302,
+      "se": 0.7753834929638345
+    },
+    "cliquet_1y_monthly_cap5_floor-3_globalfloor0": {
+      "price_per_unit_notional": 0.08088939495643117,
+      "se": 7.340236136864741e-05
+    }
+  }
+}
