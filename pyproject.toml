@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "exoticslab"
+version = "1.0.0"
+description = "Path-dependent exotics and structured products pricing: variance-reduced Monte Carlo (Brownian-bridge barrier correction, control variates), an independent Crank-Nicolson PDE cross-check, and an autocallable note pricer with fair-coupon solver, calibrated to real NSE data."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+dependencies = ["numpy>=1.26", "pandas>=2.0", "scipy>=1.11"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
