@@ -1,7 +1,7 @@
 # Exotics & Structured Products Lab
 
 ![Python](https://img.shields.io/badge/Python-3.11+-3776AB?logo=python&logoColor=white)
-![Tests](https://img.shields.io/badge/tests-29%20passing-brightgreen)
+![Tests](https://img.shields.io/badge/tests-34%20passing-brightgreen)
 ![Data](https://img.shields.io/badge/data-real%20NSE%20bhavcopy-orange)
 ![Engines](https://img.shields.io/badge/engines-Monte%20Carlo%20%2B%20PDE-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
@@ -20,7 +20,7 @@ Barrier, Asian, lookback and cliquet options; a 3-year autocallable reverse conv
 pip install -r requirements.txt        # numpy, pandas, scipy (+ pytest for tests)
 python main.py                         # Cases A/B/C on the real calibration (~1 min)
 python tools/build_dashboard.py        # regenerates docs/dashboard.html
-python -m pytest tests -q              # 29 tests
+python -m pytest tests -q              # 34 tests
 ```
 
 Open `docs/dashboard.html` — a self-contained dark dashboard (payoff diagrams, discount curve, delta-near-barrier chart, autocall probability profile; works offline, no CDN).
@@ -36,7 +36,7 @@ Open `docs/dashboard.html` — a self-contained dark dashboard (payoff diagrams,
 | `src/exotics/bs.py` | Black–Scholes–Merton + **Kemna–Vorst** geometric-Asian closed form (the control variate and validation anchor) |
 | `src/exotics/calibration.py` | Loads `data/calibration.json` — no market input is hard-coded at a call site |
 | `docs/CASES.md` | Three case studies on the real calibration (below) |
-| `tests/` | 29 tests: parity, MC within 3 SE of closed forms, barrier limits, discrete-vs-continuous monitoring bias, PDE↔MC agreement, autocall contractual extremes, CRN Greeks vs analytic |
+| `tests/` | 34 tests: parity, MC within 3 SE of closed forms, barrier limits, discrete-vs-continuous monitoring bias, PDE↔MC agreement, autocall contractual extremes, CRN Greeks vs analytic, dashboard degenerate inputs + end-to-end build |
 
 ## The maths
 

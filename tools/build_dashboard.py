@@ -27,10 +27,18 @@ def _scale(v, vmin, vmax, lo, hi):
     return lo + (v - vmin) / (vmax - vmin) * (hi - lo)
 
 
+def _no_data(w, h):
+    return (f'<svg viewBox="0 0 {w} {h}" style="width:100%;height:auto">'
+            f'<text x="{w / 2}" y="{h / 2}" fill="#8b949e" font-size="12" '
+            f'text-anchor="middle">No data</text></svg>')
+
+
 def line_chart(series, w=560, h=240, xlabel="", ylabel="", zero_line=True):
     """series: list of (xs, ys, color, label, dashed)."""
     xs_all = [x for s in series for x in s[0]]
     ys_all = [y for s in series for y in s[1]]
+    if not xs_all or not ys_all:
+        return _no_data(w, h)
     xmin, xmax = min(xs_all), max(xs_all)
     ymin, ymax = min(ys_all), max(ys_all)
     if zero_line:
@@ -79,6 +87,8 @@ def line_chart(series, w=560, h=240, xlabel="", ylabel="", zero_line=True):
 
 
 def bar_chart(values, w=560, h=240, color="#58a6ff", ylabel=""):
+    if not values:
+        return _no_data(w, h)
     n = len(values)
     vmax = max(values) * 1.15 or 1.0
     L, R, Tp, B = 40, 10, 12, 26
